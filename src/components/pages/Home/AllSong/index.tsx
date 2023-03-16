@@ -60,13 +60,21 @@ const AllSong = () => {
             <section className={styles.wrapperAllSong}>
                 <header className='song-header'>
                     <h2 className='song-header--title'>All Song</h2>
-                    <figure className='avatar'>
-                        <img
-                            src='https://jungjung261.blob.core.windows.net/nextjs-project/user/avatar.jpg'
-                            alt='avatar'
-                            loading='lazy'
-                        />
-                    </figure>
+                    <div className='song-header--right'>
+                        <div
+                            className='add-song'
+                            onClick={() => navigate('/add-song')}>
+                            <i className='fa-solid fa-plus'></i>
+                            <span>Add new song</span>
+                        </div>
+                        <figure className='avatar'>
+                            <img
+                                src='https://jungjung261.blob.core.windows.net/nextjs-project/user/avatar.jpg'
+                                alt='avatar'
+                                loading='lazy'
+                            />
+                        </figure>
+                    </div>
                 </header>
 
                 <section className='song-content'>
@@ -82,9 +90,9 @@ const AllSong = () => {
                         <table id='table-song'>
                             <thead>
                                 <tr className='table-header'>
-                                    <th>Artist</th>
-                                    <th>Avatar</th>
                                     <th>Song</th>
+                                    <th>Artist</th>
+                                    <th>Artist avatar</th>
                                     <th>Thumbnail</th>
                                     <th>Song url</th>
                                     <th></th>
@@ -96,9 +104,9 @@ const AllSong = () => {
                                         <tr
                                             key={item._id}
                                             className='table-item'>
+                                            <td>{item.name}</td>
                                             <td>{item.artist}</td>
                                             <td>{item.artist_avatar}</td>
-                                            <td>{item.name}</td>
                                             <td>{item.song_thumbnail}</td>
                                             <td>{item.song_url}</td>
                                             <td className='action'>
@@ -141,7 +149,23 @@ const AllSong = () => {
                     size='auto'>
                     <section className={styles.wrapperEditModal}>
                         <div className='modal-content'>
-                            {songDataModal?.name}
+                            <form className='modal-form'>
+                                <div className='wrapper-group'>
+                                    <div className='form-group'>
+                                        <input type='text' required />
+                                        <label className='label'>Artist</label>
+                                    </div>
+                                    <div className='form-group'>
+                                        <input type='text' required />
+                                        <label className='label'>Avatar</label>
+                                    </div>
+                                </div>
+
+                                <div className='form-group'>
+                                    <input type='text' required />
+                                    <label className='label'>Song</label>
+                                </div>
+                            </form>
                         </div>
                     </section>
                 </Modal>

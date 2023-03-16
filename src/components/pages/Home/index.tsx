@@ -6,8 +6,8 @@ import styles from './Home.module.scss';
 const ITEM_MENU = [
     {
         id: 1,
-        name: 'All songs',
-        icon: 'fa-solid fa-music',
+        name: 'Home',
+        icon: 'fa-solid fa-home',
         url: '/',
     },
     {

@@ -88,6 +88,35 @@
             font-weight: 500;
         }
 
+        &--right {
+            display: flex;
+            align-items: center;
+            gap: 0 8px;
+
+            .add-song {
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                border-radius: 8px;
+                border: 1px solid #008000;
+                color: #008000;
+                transition: all 0.3s ease-in-out;
+
+                span {
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: #008000;
+                    color: #fff;
+                }
+            }
+        }
+
         .avatar {
             width: 40px;
             height: 40px;
@@ -177,11 +206,11 @@
                     }
 
                     &-edit {
-                        color: #008000;
-                        border: 1px solid #008000;
+                        color: #1e88e5;
+                        border: 1px solid #1e88e5;
 
                         &:hover {
-                            background-color: #008000;
+                            background-color: #1e88e5;
                             color: #fff;
                         }
                     }
@@ -210,6 +239,26 @@
                 }
             }
         }
+    }
+}
+
+.wrapperAddSong {
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 3px;
+
+    :global .add-song--header {
+        .title {
+            font-size: 22px;
+            font-weight: 500;
+        }
+    }
+
+    :global .add-song--content {
+        margin-top: 16px;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 8px;
     }
 }
 
@@ -255,6 +304,106 @@
             &:hover {
                 cursor: pointer;
                 background-color: #c62828;
+            }
+        }
+    }
+}
+
+.wrapperEditModal {
+    width: 800px;
+    padding: 16px;
+
+    :global .modal-content {
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wrapper-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            .form-group {
+                width: 50%;
+            }
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 12px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            background-color: #008000;
+            color: #fff;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #fff;
+                color: #008000;
+                border: 1px solid #008000;
+            }
+        }
+
+        .form-group {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            position: relative;
+
+            input {
+                width: 100%;
+                padding: 16px 12px;
+                background: transparent;
+
+                &:focus,
+                &:valid {
+                    & ~ label {
+                        top: 0;
+                        left: 8px;
+                        padding: 0 4px;
+                        background-color: #fff;
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: #989797;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+
+            label {
+                position: absolute;
+                left: 8px;
+                padding: 0 4px;
+                background-color: #fff;
+                font-size: 12px;
+                font-weight: 500;
+                color: #989797;
+                transform: translateY(-50%);
+                top: 50%;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            &--item {
+                display: flex;
+                align-items: center;
+
+                span {
+                    margin-top: -1px;
+                    font-size: 14px;
+
+                    &::first-letter {
+                        text-transform: capitalize;
+                    }
+                }
             }
         }
     }
