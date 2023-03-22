@@ -8,6 +8,7 @@ import Modal from '../../../common/Modal';
 import useFetch from '../../../hooks/useFetch';
 
 import styles from '../Home.module.scss';
+import { useSelector } from 'react-redux';
 
 type songTypes = {
     _id: string;
@@ -43,6 +44,7 @@ const songType = [
 
 const AllSong = () => {
     const navigate = useNavigate();
+    const user = useSelector((state: any) => state.user.user);
     const { data, isPending, error } = useFetch(
         `${process.env.REACT_APP_API_URL}/all-songs`
     );
@@ -83,7 +85,7 @@ const AllSong = () => {
         try {
             setUpdateSongPending(true);
             await axios.put(
-                `${process.env.REACT_APP_API_URL}/update/${songId}`,
+                `${process.env.REACT_APP_API_URL}/song/update/${songId}`,
                 {
                     name: song,
                     song_url: songUrl,
@@ -91,6 +93,12 @@ const AllSong = () => {
                     artist: artist,
                     artist_avatar: artistAvatar,
                     song_types: songTypeI,
+                },
+                {
+                    headers: {
+                        authorization: user.tokens.accessToken,
+                        'x-client-id': user.user.id,
+                    },
                 }
             );
             setUpdateSongPending(false);
@@ -110,12 +118,18 @@ const AllSong = () => {
     const handleDeleteSong = async () => {
         try {
             await axios.delete(
-                `${process.env.REACT_APP_API_URL}/delete/${songDataModal?._id}`
+                `${process.env.REACT_APP_API_URL}/song/delete/${songDataModal?._id}`,
+                {
+                    headers: {
+                        authorization: user.tokens.accessToken,
+                        'x-client-id': user.user.id,
+                    },
+                }
             );
             setDeleteModal(false);
-            navigate('/');
+            navigate(0);
         } catch (error) {
-            alert(error);
+            toast.error(error as string);
         }
     };
 

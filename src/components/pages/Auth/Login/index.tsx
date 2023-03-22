@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../_redux/features/user';
+
 import LoadingScreen from '../../../common/LoadingScreen';
 import styles from './Login.module.scss';
 
@@ -26,6 +29,16 @@ interface LoginResponse {
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector((state: any) => state.user.user);
+
+    const checkLogin = user?.tokens?.accessToken;
+
+    useEffect(() => {
+        if (checkLogin) {
+            navigate('/');
+        }
+    }, [checkLogin, navigate]);
 
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -58,13 +71,14 @@ const LoginPage = () => {
 
             console.log(response.data);
 
-            const { accessToken, refreshToken } = response.data.metadata.tokens;
-            await localStorage.setItem('accessToken', accessToken);
-            await localStorage.setItem('refreshToken', refreshToken);
+            await dispatch(getUser(response.data.metadata));
+
+            // await localStorage.setItem('accessToken', accessToken);
+            // await localStorage.setItem('refreshToken', refreshToken);
 
             setLoginPending(false);
             toast.success('Login successfully!');
-            navigate('/');
+            // navigate('/');
         } catch (error: any) {
             if (error.response.data.message.includes('User')) {
                 setValidateUserName(error.response.data.message);
@@ -158,7 +172,6 @@ const LoginPage = () => {
                                 'https://jungjung261.blob.core.windows.net/nextjs-project/notes_app/hero-login.png'
                             }
                             alt='Login page'
-                            loading='lazy'
                         />
                     </figure>
                 </div>

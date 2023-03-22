@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 import styles from '../Home.module.scss';
+import { useSelector } from 'react-redux';
 
 const songTypes = [
     {
@@ -28,24 +29,9 @@ const songTypes = [
     },
 ];
 
-// type AxiosRes = {
-//     message: string;
-//     data: {
-//         _id: string;
-//         name: string;
-//         artist: string;
-//         artist_avatar: string;
-//         song_thumbnail: string;
-//         song_url: string;
-//         type: string[];
-//         slug: string;
-//         createdAt: string;
-//         updatedAt: string;
-//     };
-// };
-
 const AddSong = () => {
     const navigate = useNavigate();
+    const user = useSelector((state: any) => state.user.user);
 
     const [artist, setArtist] = useState<string>('');
     const [artistAvatar, setArtistAvatar] = useState<string>('');
@@ -67,7 +53,17 @@ const AddSong = () => {
     const handleAddSong = async () => {
         try {
             setIsPending(true);
-            await axios.post(`${process.env.REACT_APP_API_URL}/create`, data);
+            await axios.post(
+                `${process.env.REACT_APP_API_URL}/song/create`,
+                data,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        authorization: user.tokens.accessToken,
+                        'x-client-id': user.user.id,
+                    },
+                }
+            );
             setIsPending(false);
             toast.success('Add song successfully');
             navigate('/');

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 type Props = {
@@ -6,7 +7,8 @@ type Props = {
 };
 
 const PrivateRoute: React.FC<Props> = ({ children }) => {
-    const checkLogin = Boolean(localStorage.getItem('accessToken'));
+    const user = useSelector((state: any) => state.user.user);
+    const checkLogin = Boolean(user?.tokens?.accessToken);
 
     return checkLogin ? children : <Navigate to='/login' replace />;
 };
