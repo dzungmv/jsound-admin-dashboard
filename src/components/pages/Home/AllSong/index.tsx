@@ -8,7 +8,8 @@ import Modal from '../../../common/Modal';
 import useFetch from '../../../hooks/useFetch';
 
 import styles from '../Home.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../_redux/features/user';
 
 type songTypes = {
     _id: string;
@@ -17,6 +18,8 @@ type songTypes = {
     name: string;
     song_thumbnail: string;
     song_url: string;
+    createdAt: string;
+    updatedAt: string;
 };
 
 const songType = [
@@ -44,12 +47,17 @@ const songType = [
 
 const AllSong = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user.user);
     const { data, isPending, error } = useFetch(
-        `${process.env.REACT_APP_API_URL}/all-songs`
+        `${process.env.REACT_APP_API_URL}/song/all-songs`
     );
 
-    const songs = data?.data;
+    const filterDataByDate = data?.data.sort((a: any, b: any) => {
+        return Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
+    });
+
+    const songs = filterDataByDate;
 
     const [songDataModal, setSongDataModal] = React.useState<songTypes>();
 
@@ -104,9 +112,11 @@ const AllSong = () => {
             setUpdateSongPending(false);
             setEditModal(false);
             navigate(0);
-        } catch (error: unknown) {
-            toast.error(error as string);
+        } catch (error: any) {
             setUpdateSongPending(false);
+            if (error.response.status === 401) {
+                await dispatch(logout());
+            }
         }
     };
 
@@ -128,8 +138,10 @@ const AllSong = () => {
             );
             setDeleteModal(false);
             navigate(0);
-        } catch (error) {
-            toast.error(error as string);
+        } catch (error: any) {
+            if (error.response.status === 401) {
+                await dispatch(logout());
+            }
         }
     };
 
@@ -145,13 +157,6 @@ const AllSong = () => {
                             <i className='fa-solid fa-plus'></i>
                             <span>Add new song</span>
                         </div>
-                        <figure className='avatar'>
-                            <img
-                                src='https://jungjung261.blob.core.windows.net/nextjs-project/user/avatar.jpg'
-                                alt='avatar'
-                                loading='lazy'
-                            />
-                        </figure>
                     </div>
                 </header>
 

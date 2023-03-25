@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
     const handleLogout = async () => {
         try {
             setLogoutPending(true);
-            const res = await axios.post(
+            await axios.post(
                 `${process.env.REACT_APP_API_URL}/auth/logout`,
                 {},
                 {
