@@ -1,15 +1,14 @@
-import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 import Modal from '../../../common/Modal';
 import useFetch from '../../../hooks/useFetch';
 
-import styles from '../Home.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../_redux/features/user';
+import styles from '../Home.module.scss';
 
 type songTypes = {
     _id: string;
