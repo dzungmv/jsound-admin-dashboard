@@ -4,6 +4,7 @@ import PrivateRoute from './components/common/PrivateRoute';
 import LoginPage from './components/pages/Auth/Login';
 import HomePage from './components/pages/Home';
 import AddSong from './components/pages/Home/AddSong';
+
 import AllSong from './components/pages/Home/AllSong';
 
 function App() {
@@ -20,7 +21,6 @@ function App() {
                         }>
                         <Route path='/' element={<AllSong />} />
                         <Route path='/add-song' element={<AddSong />} />
-                        <Route path='/artists' element={<h1>Artust</h1>} />
                     </Route>
 
                     <Route path='/login' element={<LoginPage />} />

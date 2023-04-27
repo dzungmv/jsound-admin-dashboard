@@ -73,9 +73,6 @@ const LoginPage = () => {
 
             await dispatch(getUser(response.data.metadata));
 
-            // await localStorage.setItem('accessToken', accessToken);
-            // await localStorage.setItem('refreshToken', refreshToken);
-
             setLoginPending(false);
             toast.success('Login successfully!');
             // navigate('/');

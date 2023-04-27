@@ -15,12 +15,6 @@ const ITEM_MENU = [
         icon: 'fa-solid fa-home',
         url: '/',
     },
-    {
-        id: 2,
-        name: 'Artists',
-        icon: 'fa-solid fa-user',
-        url: '/artists',
-    },
 ];
 
 const HomePage: React.FC = () => {

@@ -49,7 +49,7 @@ const AllSong = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user.user);
     const { data, isPending, error } = useFetch(
-        `${process.env.REACT_APP_API_URL}/song/all-songs`
+        `${process.env.REACT_APP_API_URL}/song/get-songs`
     );
 
     const filterDataByDate = data?.data.sort((a: any, b: any) => {
